@@ -1,7 +1,7 @@
 document.getElementById('formulario-registro').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(this);
-    fetch('registrar_cliente.php', {
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/registrar_cliente.php', { // URL de ngrok
         method: 'POST',
         body: formData
     })
@@ -39,10 +39,9 @@ function imprimirBoleta() {
     location.reload();  // Recargar la página después de imprimir
 }
 
-
-//script para obtener los clientes 
+// Script para obtener los clientes 
 function actualizarClientes() {
-    fetch('obtener_clientes.php')
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/obtener_clientes.php') // URL de ngrok
     .then(response => response.text())
     .then(data => {
         document.getElementById('clientes').innerHTML = data;
@@ -51,7 +50,7 @@ function actualizarClientes() {
 }
 
 function atenderCliente(id) {
-    fetch('atender_cliente.php', {
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/atender_cliente.php', { // URL de ngrok
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
