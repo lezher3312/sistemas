@@ -1,11 +1,16 @@
 document.getElementById('formulario-registro').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(this);
-    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/registrar_cliente.php', { // URL de ngrok
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/registrar_cliente.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.status);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.error) {
             alert(data.error);
@@ -41,8 +46,13 @@ function imprimirBoleta() {
 
 // Script para obtener los clientes 
 function actualizarClientes() {
-    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/obtener_clientes.php') // URL de ngrok
-    .then(response => response.text())
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/obtener_clientes.php')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.status);
+        }
+        return response.text();
+    })
     .then(data => {
         document.getElementById('clientes').innerHTML = data;
     })
@@ -50,14 +60,19 @@ function actualizarClientes() {
 }
 
 function atenderCliente(id) {
-    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/atender_cliente.php', { // URL de ngrok
+    fetch('https://71e1-2803-d100-98a0-564-6c56-21c4-f935-d023.ngrok-free.app/atender_cliente.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'id=' + id
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.status);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             actualizarClientes();
